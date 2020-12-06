@@ -1,0 +1,103 @@
+﻿@page "/"
+
+<style>
+
+    h3 {
+        font-family: 'Times New Roman', serif;
+    }
+
+    p {
+        font-family: Georgia, serif;
+    }
+
+    .btn-success{
+        color: black;
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+    }
+
+
+</style>
+
+
+<div class="justify">
+        <img style="border-radius: 20px;" src="images/wch.png" class="d-block w-100">
+    <hr />
+    <div class="align-right">
+        <p style="font-family: 'Courier'">Last time updated: @DateTime.Now.ToShortDateString()</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <div class="card" style="border: none; background-color: none; ">
+            <div class="card-body" style=" height: 500px; border-radius: 20px; border: none; background-color: rgb(2,0,36); background-image: linear-gradient(27deg, rgba(110,104,199,1) 0%, rgba(120,201,150,1) 24%, rgba(0,212,255,1) 100%);">
+                <h3 style="font-family: Copperplate, 'Copperplate Gothic Light', fantasy; text-align: left;" class="card-title">Pandemia. Cum ne-a influentat tuturor vietile?</h3>
+                <p style="font-family: Tahoma, Verdana, Segoe, sans-serif; " class="card-text">Pandemia ne-a schimbat intr-un mod radical vietile intr-un timp foarte scurt. O data cu aparitia ei au aparut automat restrictiile, printre care cea mai dura pentru noi oamenii fiind distantarea sociala! Noi oamenii sunt fiinte sociabile. Avem nevoie de interactiune, de comunicare fata in fata, de strangeri de mana, de imbratisari si multe alte lucruri care au fost drastic reduse pentru a preveni raspandirea virusului.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" >
+        <div class="card" style="border: none; background-color: none;">
+            <div class="card-body" style="height: 500px; border-radius: 20px; border: none; background-color: rgb(2,0,36); background-image: linear-gradient(301deg, rgba(232,72,67,1) 0%, rgba(182,195,51,1) 24%, rgba(233,106,237,1) 100%);">
+                <h3 style="font-family: Copperplate, 'Copperplate Gothic Light', fantasy; text-align: left;" class="card-title">Viata noastra in pandemie</h3>
+                <p style="font-family: Tahoma, Verdana, Segoe, sans-serif; " class="card-text">Multi oameni si-au pierdut locul de munca. Altii au fost nevoiti sa se reprofileze pe alte domenii de activitate. Altii au suferit mari pierderi materiale. Studentii si elevii sunt nevoiti sa se obisnuiasca cu un alt mod de invatare. Fiecare a avut de suferit intr-o oarecare masura insa trebuie sa ne pastram optimismul si sa mergem mai departe!</p>
+                <br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<hr />
+
+<div class="jumbotron" style="border-radius: 10px; background-color: khaki;">
+    <h2>Ce putem face?</h2>
+    <p>Pentru a nu ne irosi timpul pretios pe care il avem, mai ales ca suntem fortati oarecum sa ramanem in casa, este ideal ca fiecare dintre noi sa nu se gandeasca la acest an ca fiind unul irosit! Asa ca noi am facut o lista cu activitatile cele mai sugerate de comunitate prin care sa ne folosim timpul la maxim pentru dezvoltarea noastra personala, intelecutala cat si sociala, de aceasta data, online! :)</p>
+    <p>Aici se regasesc cateva dintre sugestiile cele mai apreciate si utilizate de comunitate in aceasta perioada:</p>
+    <div>
+        <div class="jumbotron" style="border-radius: 20px; background-color: pink; background-image: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,150,1) 100%);">
+            <h3 class="option"><strong> Este timpul pentru seriale. </strong></h3>
+            <p>Serialele raman categoric pe primul loc in topul activitatilor sugerate, mai ales in aceasta perioada in care ne petrecem mare parte din timpul nostru in casa! Mai jos aveti o lista cu cele mai apreciate seriale cat si detalii, note, descrieri cat si link-uri de acces pentru fiecare dintre ele.</p>
+            <a href="/tvseries"><button class="btn btn-xxl btn-success" style="border: none; background-color: pink; float:right; border-radius: 15px;"> Seriale </button></a>
+        </div>
+
+        <div class="jumbotron" style="border-radius: 20px; background-color: pink; background-image: linear-gradient(321deg, rgba(2,0,36,1) 0%, rgba(38,172,87,1) 41%, rgba(0,212,255,1) 100%);">
+            <h3 class="options"><strong> Este timpul pentru citit. </strong></h3>
+            <p>La fel ca serialele, cartile raman o alegere foarte buna in aceasta perioada, iar pentru asta noi am creat o lista de titluri apreciate de comunitate, cat si note, descrieri si sugestii la care fiecare poate contribui.</p>
+            <a href="/books"><button class="btn btn-xxl btn-success" style="border: none; background-color: pink; float:right; border-radius: 15px;"> Citit </button></a>
+        </div>
+
+        <div class="jumbotron" style="border-radius: 20px; background-color: pink; background-image: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,149,29,1) 53%, rgba(252,176,69,1) 100%);">
+            <h3 class="options"><strong> Este timpul pentru muzica. </strong></h3>
+            <p>Nimic nu se compara cu placerea oferita de piesa ta preferata. Aici iti oferim parerile oamenilor legate de fiecare piesa cat si rating-uri si sugestii de piese noi la care fiecare dintre noi poate contribui.</p>
+            <a href="/music"><button class="btn btn-xxl btn-success" style="border: none; background-color: pink; float:right; border-radius: 15px;"> Muzica </button></a>
+        </div>
+
+        <div class="jumbotron" style="border-radius: 20px; background-color: pink; background-image: radial-gradient(circle, rgba(105,251,63,1) 7%, rgba(242,78,78,1) 92%);">
+            <h3 class="options"><strong> Spune-ne cu ce te-ai ocupat in ultima perioada. Fii o sursa de inspiratie pentru altii! </strong></h3>
+            <p>Fiecare am ajuns mai devreme sau mai tarziu intr-o pana de idei cand vine vorba de: "Ce lucruri noi as putea eu sa fac sau sa invat??". Scrie-ne mai jos cum ai reusit sa iti ocupi timpul intr-un mod cat mai eficient si mai interactiv. Fii o sursa de inspiratie pentru ceilalti!!</p>
+            <a href="/idei"><button class="btn btn-xxl btn-success" style="border: none; background-color: pink; float:right; border-radius: 15px;"> Ideile comunitatii </button></a>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="jumbotron" style="border-radius:  20px; background-color: pink; background-image: linear-gradient(to top right, lightblue, purple);">
+    <p>Site-ul este realizat de catre: </p>
+    <ul>
+        <li style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Stan Andrei - back-end developer</li>
+        <li style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Chitan Rafael - front-end developer</li>
+        <li style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Vintilescu Andrei - front-end developer</li>
+    </ul>
+    <p> Pentru mai multe detalii aveti sectiunea <a href="/about">about</a> a site-ului nostru!</p>
+</div>

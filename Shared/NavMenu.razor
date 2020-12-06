@@ -1,0 +1,61 @@
+﻿<style>
+
+    .iconify{
+        width: 30px;
+        height: 30px;
+    }
+
+</style>
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">MeetYourHobbies</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" >
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="iconify" data-icon="ant-design:home-filled" data-inline="false" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="tvseries">
+                <span class="iconify" data-icon="bi:tv" aria-hidden="true"></span>&nbsp;TV Series
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="books">
+                <span class="iconify" data-icon="bi:book-half" aria-hidden="true"></span>&nbsp;Books
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="music">
+                <span class="iconify" data-icon="bi:file-music-fill" aria-hidden="true"></span>&nbsp;Music
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="idei">
+                <span class="iconify" data-icon="bi:chat-right-dots-fill" data-inline="false" aria-hidden="true"></span>&nbsp;Ideas
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="about">
+                <span class="iconify" data-icon="fa-solid:info-circle" data-inline="false" aria-hidden="true"></span>&nbsp;About
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

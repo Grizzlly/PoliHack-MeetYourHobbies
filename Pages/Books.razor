@@ -1,0 +1,335 @@
+﻿@page "/books"
+
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.EntityFrameworkCore;
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@implements IDisposable
+@inject IDbContextFactory<Data.PoliHackContext> DbFactory
+
+<style>
+    .books_img {
+        max-width: 300px;
+        max-height: 300px;
+        padding: 20px;
+        border-radius: 40px;
+        float: left;
+    }
+
+    .books_txt {
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        font-size: large;
+    }
+
+    .books_title {
+        padding: 20px;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        text-align: center;
+        font-size: x-large;
+        text-decoration: none;
+        color: rgb(167, 124, 45);
+    }
+
+        .books_title:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+    .jumbotron {
+        background-color: white;
+    }
+
+    .card {
+        border-radius: 50px;
+    }
+
+    .books_desc {
+        font-size: small;
+    }
+
+    .new_book {
+        border-radius: 50px;
+    }
+
+    .add_book {
+        padding: 5px;
+        border-radius: 20px;
+        border-color: pink;
+        background-color: white;
+    }
+</style>
+
+
+
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel" style="padding: 20px;">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img style="border-radius: 30px;" src="images/books/oldiesbutgoldies.png" class="d-block w-100" alt="...">
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-circle" style="border-radius: 200px; color: none; background-color: none; border: black; float: right; position: fixed; z-index: 99;" onclick="jos()"><span style="width: 50px; height: 50px;" class="iconify" data-icon="bi:arrow-down-circle-fill" data-inline="false"></span></button>
+
+
+<div class="jumbotron">
+
+    <div class="accordion" id="IDaccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Portretul lui Dorian Grey
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#IDaccordion">
+                <img src="images/books/portretul-lui-dorian-grey.webp" class="books_img">
+                <div class="books_txt card-body">
+                    Basil Hallward picteaza intr-o buna zi portretul tulburator al lui Dorian Gray. Doar ca, odata cu trecerea timpului, tinarul din tablou imbatrineste, pe cind modelul lui, Dorian, ramine neschimbat. Fiecare fapta, fiecare an trecut lasa pe chipul pictat inca un semn, fara ca acest amanunt sa fie cunoscut de ceilalti; doar creatorul lui, Basil Hallward, stie, iar pentru aceasta e ucis de Dorian Gray. Acesta din urma va ajunge si el la confruntarea fatala cu reflexia sa pictata si va sfirsi, imbatrinit fara veste, victima misterioasa a imaginii din tabloul pe care atit l-a pretuit.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Harry Potter Și Piatra Filozofală
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#IDaccordion">
+                <img src="images/books/harrypotteer.JPG" class="books_img">
+                <div class="books_txt card-body">
+                    Harry Potter este un băiat care trăiește cu unchii și cu vărul lui. I-a fost spus că părinții i-au murit pe când avea doar un an într-un accident de mașinǎ și unchii lui au grijă de atunci de el. Este tratat destul de rău acasă, stând într-o cămăruță amenajată sub scări. Într-o zi, Harry verifică poșta și observă o scrisoare adresată lui, de la școala de vrăjitorie Hogwarts, însǎ unchiul lui rupe scrisoarea, nelăsându-l să o citească. În următoarele zile, o mulțime de bufnițe bombardeazǎ cǎsuța poștală cu scrisori asemǎnǎtoare, pe care unchiul Vernon le arde. Într-un efort de a evada,familia Dursley se mutǎ din loc în loc ajungând în cele din urmǎ pe o insulǎ pǎrǎsitǎ.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        La răscruce de vânturi
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#IDaccordion">
+                <img src="images/books/larascrucedevanturi.jpeg" class="books_img">
+                <div class="books_txt card-body">
+                    Reconstituirea unei pasionante povesti de dragoste, esuata din cauza unor prejudecati de netrecut. In cercul stramt al unei familii, fratele intervine brutal in destinul surorii sale. Blestemul sentimentelor impiedicate sa se desfasoare in firescul lor se intinde pe mai multe generatii, intr-un roman cu o atmosfera de o densitate uluitoare.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Mândrie și prejudecată
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#IDaccordion">
+                <img src="images/books/mandriesiprejudecata.jpg" class="books_img">
+                <div class="books_txt card-body">
+                    „Astazi nimeni nu o poate ignora pe domnisoara Austen. Ea este mai infloritoare ca oricand. Cartile ei figureaza pe listele de bestselleruri, ecranizari ale romanelor sale nu contenesc sa apara pe micul sau marele ecran, intr-un vartej de baluri, calatorii cu trasura, plimbari prin paduri primitoare. Ea provoaca simpatii feministe, identificari romantice, nostalgia parcurilor tematice, reinsufletiri ale spiritului epocii georgiene, aprecierea conservatorilor, aprobarea marxistilor, omagii literare, abordari critice deconstructiviste.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Crimă și pedeapsă
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#IDaccordion">
+                <img src="images/books/crimasipedeapsa.jpg" class="books_img">
+                <div class="books_txt card-body">
+                    Etalon al romanului dostoievskian, Crima si pedeapsa nu are nevoie de vreo recomandare speciala din partea criticului, el se recomanda singur ca o capodopera a litera turii ruse si universale, receptata ca atare pretutindeni, alaturi de Don Quijote, Hamlet, Faust, Rosu si negru, Razboi si pace, Madame Bovary… Prin problematica pe care o intruchipeaza, Raskolnikov a devenit arhetipul intelectualului inzestrat, protestatar ispitit de teoria supraomului, instrainat, in sensul modern al cuvantului, dar mai ales al celui care, savarsind o crima, isi asuma, pana la urma, si pedeapsa-ispasire.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-header" id="headingSix">
+                <h2 class="mb-0">
+                    <button class="books_title btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        Război și pace
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#IDaccordion">
+                <img src="images/books/razboisipace.jpg" class="books_img">
+                <div class="books_txt card-body">
+                    Capodopera Razboi si pace (1863-1869) zugraveste viata intregii societati ruse in perioada razboaielor napoleoniene; evenimentele istorice si interesele personale, caile de autodefinire a personalitatii si spontaneitatea vietii populare sint prezentate drept componente echivalente ale existentei natural-istorice.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br><br><br><br>
+
+    <div id="carouselIndicators" class="carousel slide" data-ride="carousel" style="padding: 20px;">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img style="border-radius: 30px;" src="images/books/newestadd.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/books/orasuloaselor.jpg" class="card-img-top new_book" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Instrumente Mortale-Orașul Oaselor</h5>
+                    <p><a href="#col1Content" data-toggle="collapse">Descriere</a></p>
+                    <div id="col1Content" class="collapse books_desc">
+                        In timp ce se indreapta spre Clubul Pandemonium din New York Clary Fray nu banuieste ca va fi martora la o crima. Si mai ales la o crima comisa de trei adolescenti care au pe brate tatuaje bizare si manuiesc arme neobisnuite. Aceasta este prima data cand Clary intalneste vanatorii de umbre razboinici porniti sa ucida demonii de pe pamant si sa mentina controlul asupra vampirilor si varcolacilor.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/books/eliassispioana.jpeg" class="card-img-top new_book" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Elias și Spioana Cărturarilor</h5>
+                    <p><a href="#col2Content" data-toggle="collapse">Descriere</a></p>
+                    <div id="col2Content" class="collapse books_desc">
+                        Focul din cenușă te introduce intr-o lume a luptelor pentru libertate. Mai repede decat ti-ai putea imagina, esti prins in valtoarea bataliei dintre Imperiu si Rezistenta.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/books/fluturistriviti.jpg" class="card-img-top new_book" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Fluturi Striviți</h5>
+                    <p><a href="#col3Content" data-toggle="collapse">Descriere</a></p>
+                    <div id="col3Content" class="collapse books_desc">
+                        Doi adolescenti se simt atrasi unul de altul, promisi unul altuia inca din copilarie de catre mamele lor visatoare. Fata este dulce, intelegatoare si banala. Baiatul e stralucitor, charismatic si cu probleme de comportament. Relatia lor e plina de suisuri si coborasuri, iar acestea se transforma intr-un punct culminant infiorator care ar trebui sa duca la sacrificiul suprem...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/books/fatadintren.jpeg" class="card-img-top new_book" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Fata din tren</h5>
+                    <p><a href="#col4Content" data-toggle="collapse">Descriere</a></p>
+                    <div id="col4Content" class="collapse books_desc">
+                        Rachel merge in fiecare dimineata cu acelasi tren. Stie ca va astepta la acelasi semnal defect, timp in care va urmari ritualul de dimineata al unui cuplu ce locuieste intr-o casa de langa calea ferata. I-a botezat Jess si Jason si viata lor i se pare perfecta. Pana cand intr-o zi vede ceva ce o socheaza. Totul se schimba si Rachel are sansa de a lua parte la vietile pe care le-a observat doar de pe margine.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<AuthorizeView>
+    <Authorized Context="authContext">
+        <div class="jumbotron" style="padding: 20px; border-radius: 20px; background-color: rgb(123, 156, 103);">
+            <div style="text-align:center;">
+
+                <h3>Would you like to add a new book?</h3>
+                <label><em>Toate campurile sunt obligatorii!</em></label><br />
+                <EditForm Context="formContext" Model="@bookModel" OnValidSubmit="@Trimite">
+                    <label>Book name: <span style="padding-left:47px" /> </label><InputText @bind-Value="bookModel.Name" class="add_book" type="text" id="new_book" name="new_book" /><br> 
+
+                    <label>Description: <span style="padding-left:50px" /> </label><InputTextArea @bind-Value="bookModel.Desc" class="add_book" type="text" id="book_description" name="book_description" /> <br />
+
+                    <label>Link to book image:</label><InputText @bind-Value="bookModel.Img" class="add_book" type="text" id="link_to_image" name="link_to_image" /> <br />
+
+                    <label>Referitor la descrierea cartii, aceasta poate fi cea oficiala sau propria alegere :)</label> <br />
+
+                    <button class="add_book" type="submit" onclick="books_sent_alert()">Posteaza</button>
+                </EditForm>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p><em><strong>Pentru a putea trimite sugestii de titluri noi, mai intai trebuie sa va creati un cont pe site-ul nostru, sau sa va logati daca aveti deja un cont valid.</strong></em></p>
+        <p>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Login>LOGIN</a></button>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Register>SIGN UP</a></button>
+        </p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{ private class BookModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Desc { get; set; }
+
+        [Required]
+        public string Img { get; set; }
+    }
+
+    private BookModel bookModel = new BookModel();
+
+    Data.PoliHackContext cnt;
+    AuthenticationState userstate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (cnt == null)
+        {
+            try
+            {
+                cnt = DbFactory.CreateDbContext();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        userstate = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose()
+    {
+        cnt.Dispose();
+    }
+
+    private void Trimite()
+    {
+        if (userstate.User.Identity.IsAuthenticated)
+        {
+            Data.Book books = new Data.Book()
+            {
+                Descriere = bookModel.Desc,
+                Titlu = bookModel.Name,
+                Imagine = bookModel.Img,
+                UserName = userstate.User.Identity.Name
+            };
+
+            cnt.Books.Add(books);
+            cnt.SaveChanges();
+        }
+    }
+}

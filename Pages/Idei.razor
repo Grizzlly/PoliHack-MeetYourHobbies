@@ -1,0 +1,142 @@
+﻿@page "/idei"
+
+<style>
+    div.align-center {
+        text-align: center;
+    }
+
+    div.left-padding {
+        padding-left: 7%;
+    }
+
+    div.right-padding {
+        padding-right: 7%;
+    }
+
+    input.height {
+        height: 150px;
+    }
+
+    input.width {
+        width: 500px;
+    }
+
+    .saved_idea {
+        background-color: rgb(221, 105, 105);
+        border-radius: 20px;
+    }
+
+    .idea {
+        background-color: cornflowerblue;
+        background-image: linear-gradient(90deg, rgba(105,251,63,1) 7%, rgba(242,78,78,1) 92%);
+        border-radius: 20px;
+    }
+
+    .post_btn {
+        border-radius: 50px;
+        border: white;
+    }
+
+    .my_idea{
+        background-color: rgb(115, 140, 130);
+        background-image: linear-gradient(301deg, rgba(224,171,86,1) 6%, rgba(51,195,123,1) 24%, rgba(106,118,237,1) 100%);
+        border-radius: 20px;
+    }
+</style>
+
+
+
+
+<div class="align-center">
+
+    <h1>Ideile comunitatii</h1>
+
+</div>
+
+<div class="left-padding">
+    <div class="right-padding">
+    <div class="jumbotron" style="border-radius: 20px; background-color: #e6d79c;">
+        <h2> Spune-ne ideea ta! </h2>
+
+    <AuthorizeView>
+
+        <NotAuthorized>
+	
+	        <p><em><strong>Pentru a ne putea posta idei, mai intai trebuie sa va creati un cont pe site-ul nostru, sau sa va logati daca aveti deja un cont valid.</strong></em></p>
+            <p>
+                <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Login>LOGIN</a></button>
+                <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Register>SIGN UP</a></button>
+            </p>
+
+	    </NotAuthorized>
+
+
+        <Authorized Context="authContext">
+            <EditForm Model="@ideiModel" style="border-radius: 20px;" OnValidSubmit="@Trimite" Context="formContext">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Scrie-ne ceva</span>
+                    </div>
+                    <InputTextArea @bind-Value="ideiModel.Mesaj" class="form-control" aria-label="With textarea"></InputTextArea>
+                </div> <br />
+                <button style="float: right;" class="post_btn btn-lg btn-warning" type="submit">Posteaza</button><br />
+            </EditForm>
+        </Authorized>
+
+     </AuthorizeView>
+
+    </div>
+</div>
+</div>
+<h2>Postarile mele:</h2>
+
+@if (ideimele == null)
+{
+    <h3>Nothing here yet!</h3>
+}
+else
+{
+    <div class="row">
+        @foreach (Data.ToDoIdea idee in ideimele)
+        {
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div style="border-radius: 20px;" class="card">
+                    <div class="my_idea card-body">
+                        <img src="images/pin.png" style="float: right; width: 30px; height: 30px;">
+                        <h5 class="card-title">@idee.Username</h5>
+                        <p class="card-text">@idee.Mesaj</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+}
+
+<hr>
+<h2> Ideile celorlalti: </h2>
+
+@if (ideialtii == null)
+{
+    <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (Data.ToDoIdea idee in ideialtii)
+        {
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div style="border-radius: 20px;" class="card">
+                    <div class="idea card-body">
+                        <img src="images/pin.png" style="float: right; width: 30px; height: 30px;">
+                        <h5 class="card-title">@idee.Username</h5>
+                        <p class="card-text">@idee.Mesaj</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+}

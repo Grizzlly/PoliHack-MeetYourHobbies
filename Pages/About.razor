@@ -1,0 +1,163 @@
+@page "/about"
+
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.EntityFrameworkCore;
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@implements IDisposable
+@inject IDbContextFactory<Data.PoliHackContext> DbFactory
+
+<style>
+    div.align-center {
+        text-align: center;
+    }
+
+    .coders {
+        font-family: Impact, serif;
+        background-color: lightblue;
+        padding: 50px;
+    }
+</style>
+
+<div class="align-center">
+
+    <h2 class="jumbotron">Site-ul este realizat si intretinut de catre:</h2>
+    <div class="row" style="padding: 10px;">
+        <div style="background-color: rgba(0, 0, 255, 0.55);" class=" coders col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            Stan Andrei <br> back-end developer
+        </div>
+
+        <div style="float:middle; background-color: rgba(255, 255, 0, 0.55);" class="coders col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            Chitan Rafael <br> front-end developer
+        </div>
+
+        <div style="background-color: rgba(255, 0, 0, 0.55);" class="coders col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            Vintilescu Andrei <br> front-end developer
+        </div>
+    </div>
+    <div class="jumbotron" style="height: 200px; border-radius: 20px;  padding: 50px; background-color: burlywood;">
+        <p><span style="font-size: 100px; float: left;" class="iconify" data-icon="entypo:info-with-circle" data-inline="false"></span>Scopul site-ului nostru este acela de a ajuta oamenii si a le oferi idei cat si solutii pentru a trece cu bine peste perioada pandemiei fara a se gandi la anul acesta ca fiind unul ratat!</p>
+    </div>
+
+    <div class="jumbotron" style="background-color: khaki; border-radius: 20px;">
+
+        <h2>Venim in ajutorul lor si le oferim astfel:</h2> <br />
+        <p><strong><span class="iconify" data-icon="ic:sharp-verified" data-inline="false"></span>O sectiune pentru <a href="tvseries">seriale</a> unde pot gasi modalitati relaxante de a-si petrece timpul!</strong></p>
+        <p><strong><span class="iconify" data-icon="ic:sharp-verified" data-inline="false"></span>O sectiune pentru <a href="books">citit</a> pentru a-si folosi timpul in scopul dezvoltarii personale cat si intelectuale!</strong></p>
+        <p><strong><span class="iconify" data-icon="ic:sharp-verified" data-inline="false"></span>O sectiune pentru <a href="music">muzica</a> unde pot gasi inspiratie din partea comunitatii!</strong></p>
+        <p><strong><span class="iconify" data-icon="ic:sharp-verified" data-inline="false"></span>O sectiune pentru <a href="idei">idei</a>, in cazul in care esti dornic de a-ti petrece timpul facand sau invatand ceva nou!</strong></p>
+
+    </div>
+
+    <div class="jumbotron" style="background-color:rgb(147, 193, 233);">
+
+                <h3>Daca doresti sa trimiti un mesaj echipei noastre, o poti face mai jos:</h3>
+
+                <AuthorizeView>
+                    <Authorized Context="authContext">
+                        <EditForm Context="formContext" Model="@exampleModel" OnValidSubmit="@Trimite">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Scrie-ne ceva</span>
+                                </div>
+                                <InputTextArea id="mesaj" @bind-Value="exampleModel.Message" placeholder="Idei / Pareri / Obiectii / etc. :P" class="form-control" aria-label="With textarea"></InputTextArea> <br />
+                             </div>
+                             <br>
+                            <button class="post_btn btn btn-success" type="submit" onclick="about_sent_alert()">Posteaza</button> <br />
+
+
+                            
+                            <!--TODO: Repara erorile RAFA!!!!!!!!!!!-->
+                            
+                            <!-- Gataaaaa -->
+                        </EditForm>
+                    </Authorized>
+                    <NotAuthorized>
+                        <p><em><strong>Pentru a ne putea trimite mesaje, mai intai trebuie sa va creati un cont pe site-ul nostru, sau sa va logati daca aveti deja un cont valid.</strong></em></p>
+                        <p>
+                            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Login>LOGIN</a></button>
+                            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Register>SIGN UP</a></button>
+                        </p>
+                    </NotAuthorized>
+                </AuthorizeView>
+
+    </div>
+    
+    <!--cod preventiv-->
+
+
+    @if (userstate != null)
+    {
+        @if (userstate.User.IsInRole("admin"))
+        {
+        <div>                             
+            <h2>Mesaje trimise:</h2>
+            <div class="align-left">
+            <ol>
+                
+            </ol>
+            </div>
+        </div>
+        }
+    }
+    <!---->
+
+</div>
+
+@code
+{ private class ExampleModel
+    {
+        [Required]
+        [StringLength(1000, ErrorMessage = "Text prea mare! Maxim 1000 caractere.")]
+        public string Message { get; set; }
+    }
+
+    private ExampleModel exampleModel = new ExampleModel();
+
+    Data.PoliHackContext cnt;
+    AuthenticationState userstate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (cnt == null)
+        {
+            try
+            {
+                cnt = DbFactory.CreateDbContext();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        userstate = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose()
+    {
+        cnt.Dispose();
+    }
+
+    private void Trimite()
+    {
+        if(userstate.User.Identity.IsAuthenticated)
+        {
+            Data.ContactMessage msg = new Data.ContactMessage()
+            {
+                Mesaj = exampleModel.Message,
+                Username = userstate.User.Identity.Name
+            };
+
+            cnt.ContactMessages.Add(msg);
+            cnt.SaveChanges();
+        }
+    }
+}

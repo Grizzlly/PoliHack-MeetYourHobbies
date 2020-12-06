@@ -1,0 +1,702 @@
+﻿@page "/music"
+
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.EntityFrameworkCore;
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@implements IDisposable
+@inject IDbContextFactory<Data.PoliHackContext> DbFactory
+
+<style>
+
+
+    .service_icon {
+        max-width: 22px;
+        max-height: 22px;
+    }
+
+    .body {
+        padding: 10px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .new_song {
+        padding: 5px;
+        border-radius: 20px;
+        border-color: pink;
+        background-color: white;
+    }
+</style>
+
+<button class="btn btn-circle" style="border-radius: 200px; color: none; background-color: none; border: black; float: right; position: fixed; z-index: 99;" onclick="jos()"><span style="width: 50px; height: 50px;" class="iconify" data-icon="bi:arrow-down-circle-fill" data-inline="false"></span></button>
+
+
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel" style="padding: 20px;">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselIndicators" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="5000">
+            <img src="images/music/carousel_1.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-interval="5000">
+            <img src="images/music/carousel_2.png" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+<div style="text-align:center;">
+    <h1><strong>Our personal favourite songs</strong></h1>
+</div>
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/un_dia.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">UN DIA (ONE DAY)</h5>
+                <p class="card-text">J Balvin, Dua Lipa, Bad Bunny & Tainy</p>
+                <p class="card-text">UN DIA (ONE DAY) - Single</p>
+                Listen on:
+                <a href="https://open.spotify.com/album/6aqSlutLYNpzSsK4dV5jTr"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/un-dia-one-day-single/1523100098"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=BjhW3vBA1QU"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/148924801"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/rainonme.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Rain On Me</h5>
+                <p class="card-text">Lady Gaga & Ariana Grande</p>
+                <p class="card-text">Chromatica</p>Listen on:
+                <a href="https://open.spotify.com/album/05c49JgPmL4Uz2ZeqRx5SP?highlight=spotify:track:7ju97lgwC2rKQ6wwsf9no9"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/rain-on-me/1500951604?i=1500952424"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=AoAm4om0wTs"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/142397883"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/savage.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Savage</h5>
+                <p class="card-text">Megan Thee Stallion</p>
+                <p class="card-text">Suga</p>Listen on:
+                <a href="https://open.spotify.com/album/6Lo6ylJg4qbFfxicPEOzMI?highlight=spotify:track:55CHeLEfn5iJ0IIkgaa4si"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/savage/1501734515?i=1501734796"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=eJEKHdvntPI"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/133391155"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/intentions.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Intentions</h5>
+                <p class="card-text">Justin Bieber feat. Quavo</p>
+                <p class="card-text">Changes</p>Listen on:
+                <a href="https://open.spotify.com/album/63iWSELt9V1kV6RSMxN7Ii?highlight=spotify:track:4umIPjkehX1r7uhmGvXiSV"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/intentions-feat-quavo/1496639180?i=1496639586"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=3AyMjyHu1bA"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/130584972"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/mood.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Mood</h5>
+                <p class="card-text">24kGoldn feat. iann dior</p>
+                <p class="card-text">Mood - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/4YMnOf4a7obOcN1Gy2QEuM?highlight=spotify:track:3tjFYV6RSFtuktYl3ZtYcq"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/mood-feat-iann-dior/1522994918?i=1522994920"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href=""><img class="service_icon" src="images/music/yt.png"></a>
+                <a href=""><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/kingsandqueens.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Kings & Queens</h5>
+                <p class="card-text">Ava Max</p>
+                <p class="card-text">Kings & Queens - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/26c7MmQ4w8EAvVLb4jilaM?highlight=spotify:track:7a53HqqArd4b9NF4XAmlbI"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/kings-queens/1494802795?i=1494802801"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=jH1RNk8954Q"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/128098123"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/YHLQMDLG.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Yo Perreo Sola</h5>
+                <p class="card-text">Bad Bunny</p>
+                <p class="card-text">YHLQMDLG</p>Listen on:
+                <a href="https://open.spotify.com/album/5lJqux7orBlA1QzyiBGti1"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/yo-perreo-sola/1500776322?i=1500776331"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=GtSRKwDCaZM"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/132672305"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/thereforeiam.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Therefore I Am</h5>
+                <p class="card-text">Billie Eilish</p>
+                <p class="card-text">Therefore I Am - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/5G58VVE9ub1KE01Mvbd8XM?highlight=spotify:track:54bFM56PmE4YLRnqpW6Tha"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/therefore-i-am/1539499185?i=1539499186"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=RUQl6YcMalg"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/161849321"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/popstar.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">POPSTAR</h5>
+                <p class="card-text">DJ Khaled feat. Drake</p>
+                <p class="card-text">POPSTAR - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/5nNtpPsSUgb9Hlb3dF1gXa?highlight=spotify:track:6EDO9iiTtwNv6waLwa1UUq"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/popstar-feat-drake/1523923474?i=1523923824"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=-iNWEwLfkv8"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/148912466"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/babyimjealous.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Baby, I'm Jealous</h5>
+                <p class="card-text">Bebe Rexha feat. Doja Cat</p>
+                <p class="card-text">Baby, I'm Jealous - Single</p>Listen on:
+                <a href="https://open.spotify.com/track/2fTdRdN73RgIgcUZN33dvt"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/baby-im-jealous-feat-doja-cat/1532950252?i=1532950258"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=PznMpRASjAg"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/157841185"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/olhaaexplosao.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Olha A Explosão</h5>
+                <p class="card-text">Kevinho</p>
+                <p class="card-text">Olha A Explosão - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/4QEhWb117FJJ8HowEyn6pg?highlight=spotify:track:6Q4foUefrAyCt8VxJFML56"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/olha-a-explosão/1503837773?i=1503837782"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=3yd_eoMOvqk"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/87927578"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/icantgetenough.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">I Can't Get Enough</h5>
+                <p class="card-text">benny blanco, Tainy, Selena Gomez & J Balvin</p>
+                <p class="card-text">I Can't Get Enough - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/2IUVG5x1G7l0TW1LA61Eyy?highlight=spotify:track:1WSGTYKLEpKfNQYYW5Oymt"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/i-cant-get-enough/1453721558?i=1453721562"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=Tztc73r8348"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/104566410"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/thisiswhat.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">This Is What You Came For</h5>
+                <p class="card-text">Calvin Harris feat. Rihanna</p>
+                <p class="card-text">This Is What You Came For - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/3pEgGUv379EDinvg1TN7Kt?highlight=spotify:track:0azC730Exh71aQlOt9Zj3y"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/this-is-what-you-came-for-feat-rihanna/1108212521?i=1108212668"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=kOkQ4T5WO9E"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/59929263"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/inmyfeelings.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">In My Feelings</h5>
+                <p class="card-text">Drake</p>
+                <p class="card-text">Scorpion</p>Listen on:
+                <a href="https://open.spotify.com/track/2G7V7zsVDxg1yRsu7Ew9RJ"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/in-my-feelings/1418213110?i=1418213402"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=DRS_PpOrUZ4"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/91166696"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/amarillo.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Amarillo</h5>
+                <p class="card-text">J Balvin</p>
+                <p class="card-text">Colores</p>Listen on:
+                <a href="https://open.spotify.com/album/2mX8ktJoWvyidWBU9U8Jis?highlight=spotify:track:6zEgnpM0qYmHLDnh8WPejL"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/amarillo/1500490683?i=1500491199"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=KHAgoT4FZbc"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/134155377"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/positions.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">positions</h5>
+                <p class="card-text">Ariana Grande</p>
+                <p class="card-text">Positions</p>Listen on:
+                <a href="https://open.spotify.com/album/3euz4vS7ezKGnNSwgyvKcd?highlight=spotify:track:35mvY5S1H3J2QZyna3TFe0"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/positions/1537476578"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=tcYodQoapMg"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/160351543"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/wonder.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Wonder</h5>
+                <p class="card-text">Shawn Mendes</p>
+                <p class="card-text">Wonder</p>Listen on:
+                <a href="https://open.spotify.com/album/7vif3nVzXURIrjGjHeHytB?highlight=spotify:track:5KCbr5ndeby4y4ggthdiAb"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/wonder/1533345318?i=1533345325"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=fHeQemJJQII"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/157171696"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/issues.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Issues</h5>
+                <p class="card-text">Julia Michaels</p>
+                <p class="card-text">Nervous System</p>Listen on:
+                <a href="https://open.spotify.com/album/2jadjpIZfrJwIIlaJbTpHE?highlight=spotify:track:0xG0SHshCStMEyNbNC5d4k"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/issues/1440909619?i=1440909761"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=9Ke4480MicU"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/79406746"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/hawai.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Hawái</h5>
+                <p class="card-text">Maluma</p>
+                <p class="card-text">Hawái - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/3GrNH56DyfyEvBAZ3Otptm?highlight=spotify:track:4uoR6qeWeuL4Qeu2qJzkuG"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/hawái/1523698841?i=1523698843"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=BGsfeF4SNCg"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/152214145"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/holy.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Holy</h5>
+                <p class="card-text">Justin Bieber feat. Chance the Rapper</p>
+                <p class="card-text">Holy - Single</p>Listen on:
+                <a href="https://open.spotify.com/album/4hR7jjsPvRwwcHx8ntJSQS?highlight=spotify:track:5u1n1kITHCxxp8twBcZxWy"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/holy-feat-chance-the-rapper-single/1531508505"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=pvPsJFRGleA"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/155681434"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/magentariddim.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Magenta Riddim</h5>
+                <p class="card-text">DJ Snake</p>
+                <p class="card-text">Magenta Riddim - Single</p>Listen on:
+                <a href="https://open.spotify.com/track/1cpxdw5UAAZlXNhN398KA5"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/us/album/magenta-riddim/1445046117?i=1445046243"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=op4B9sNGi0k"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/113664218"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/iftheworldwasending.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">If the World Was Ending</h5>
+                <p class="card-text">JP Saxe & Julia Michaels</p>
+                <p class="card-text">If the World Was Ending - Single</p>Listen on:
+                <a href="https://open.spotify.com/track/2kJwzbxV2ppxnQoYw4GLBZ"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/ro/album/if-the-world-was-ending-feat-julia-michaels/1482468336?i=1482468337"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=1jO2wSpAoxA"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/119496335"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/megusta.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Me Gusta</h5>
+                <p class="card-text">Shakira & Anuel AA</p>
+                <p class="card-text">Me Gusta - Single</p>Listen on:
+                <a href="https://open.spotify.com/track/5Xhqh4lwJPtMUTsdBztN1a"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/ro/album/me-gusta/1494532400?i=1494532408"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=mf-UJ32PJgU"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/album/127881749"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="card">
+            <img src="images/music/savagelove.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+            <div class="card-body">
+                <h5 class="card-title">Savage Love (Laxed - Siren Beat)</h5>
+                <p class="card-text">Jawsh 686 x Jason Derulo</p>
+                <p class="card-text">Savage Love (Laxed - Siren Beat)- Single</p>Listen on:
+                <a href="https://open.spotify.com/album/1XMw3pBrYeXzNXZXc84DNw?si=H6G7I7lkRK2zwmMXucw0NA"><img class="service_icon" src="images/music/spotify.svg"></a>
+                <a href="https://music.apple.com/ro/album/savage-love-laxed-siren-beat/1517698088?i=1517698089"><img class="service_icon" src="images/music/itunes.png"></a>
+                <a href="https://www.youtube.com/watch?v=mUuyEX2M0gc"><img class="service_icon" src="images/music/yt.png"></a>
+                <a href="https://tidal.com/browse/track/144618846"><img class="service_icon" src="images/music/tidal.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="jumbotron" style="margin-top: 50px; background-color: rgba(50, 94, 187, 0.886);">
+    <strong>Feeling blue? We've got you!</strong>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/sadface.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Sad Face :(</h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/sad-face/pl.f56dee395cdd4ca5b53166b8f777f2c7"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/sadbeats.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Sad Beats</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DWVrtsSlLKzro"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/inmyroom.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">In My Room</h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/in-my-room/pl.2a0b1ea7704842f4b956e959067b8389"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/sadindie.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Sad Indie</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DWVV27DiNWxkR"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="jumbotron" style="margin-top: 50px; background-color: rgba(211, 115, 12, 0.886);">
+    <strong>Party all night long!</strong>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/pureparty.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Pure Party</h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/pure-party/pl.88bc653184544ac5a3c88b4e92f8199d"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/partyhits.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Party Hits</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DXa2PvUpywmrr"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/fridayfeeling.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Friday Feeling</h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/friday-feeling/pl.91bb14d8ee10414e8fda8fb71f56db03"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/danceparty.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Dance Part</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DXaXB8fQg7xif"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/alldaydanceparty.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        All Day Dance Part
+                    </h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/all-day-dance-party/pl.463c885fdf8b4745881901cc4b912357"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/popparty.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Pop Party</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DWXti3N4Wp5xy"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/allthewayup.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">All the Way Up</h5>
+                    Listen on:
+                    <a href="https://music.apple.com/ro/playlist/all-the-way-up/pl.acb576c15091494a9ed6dfc5c3f33957"><img class="service_icon" src="images/music/itunes.png"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card">
+                <img src="images/music/partydeluxe.png" class="card-img-top" style="max-width: 1000px; max-height: 1000px;">
+                <div class="card-body">
+                    <h5 class="card-title">Party Deluxe</h5>
+                    Listen on:
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1DWVWiyE9VDkCO"><img class="service_icon" src="images/music/spotify.svg"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<AuthorizeView>
+    <Authorized Context="authContext">
+
+        <div class="jumbotron" style="background-color: pink; margin-top: 50px; padding: 20px; border-radius: 20px;">
+            <div style="text-align:center;">
+                <h3>Would you like to add a new song?</h3>
+                <EditForm Context="formContext" Model="@songModel" OnValidSubmit="@Trimite">
+                    <label style=""><em>Campuri obligatorii*</em></label><br />
+
+                    <label style="">Song name: <span style="padding-left:48px" /> </label><InputText @bind-Value="songModel.Name" style=" " class="new_song" type="text" id="new_song" name="new_song" /> <br />
+
+                    <label style="">Artist: <span style="padding-left:93px" /> </label><InputText @bind-Value="songModel.Artist" style=" " class="new_song" type="text" id="artist" name="artist" /> <br />
+
+                    <label style=" ">Link to song image:</label><InputText @bind-Value="songModel.Image" style=" " class="new_song" type="text" id="song_image" name="song_image" /> <br />
+
+                    <label style=" ">Link to Spotify: <span style="padding-left:35px" /> </label><InputText @bind-Value="songModel.LSpotify" style=" " class="new_song" type="text" id="link_Spotify" name="link_Spotify" /> <br />
+
+                    <label style=" "><em>Campuri optionale*</em></label><br />
+
+                    <label style=" ">Album: <span style="padding-left:50px" /> <span style="padding-left:47px" /> </label><InputText @bind-Value="songModel.Album" style=" " class="new_song" type="text" id="album" name="album" /> <br />
+
+                    <label style=" ">Link to Apple Music:</label><InputText @bind-Value="songModel.LApplemusic" style=" " class="new_song" type="text" id="link_Apple_Music" name="link_Apple_Music" /> <br />
+
+                    <label style=" ">Link to Youtube: <span style="padding-left:30px" /> </label><InputText @bind-Value="songModel.LYoutube" style=" " class="new_song" type="text" id="link_Youtube" name="link_Youtube" /> <br />
+
+                    <label style=" ">Link to Tidal: <span style="padding-left:50px" /> </label><InputText @bind-Value="songModel.LTidal" style=" " class="new_song" type="text" id="link_Tidal" name="link_Tidal" /> <br />
+
+                    <button style=" " class="new_song" type="submit" onclick="music_sent_alert()">Posteaza</button>
+                </EditForm>
+            </div>
+
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p><em><strong>Pentru a putea trimite sugestii de titluri noi, mai intai trebuie sa va creati un cont pe site-ul nostru, sau sa va logati daca aveti deja un cont valid.</strong></em></p>
+        <p>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Login>LOGIN</a></button>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Register>SIGN UP</a></button>
+        </p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{
+    private class SongModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Artist { get; set; }
+
+        [Required]
+        public string Image { get; set; }
+
+        [Required]
+        public string LSpotify { get; set; }
+
+        public string Album { get; set; }
+
+        public string LApplemusic { get; set; }
+
+        public string LYoutube { get; set; }
+
+        public string LTidal { get; set; }
+    }
+
+    private SongModel songModel = new SongModel();
+
+    Data.PoliHackContext cnt;
+    AuthenticationState userstate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (cnt == null)
+        {
+            try
+            {
+                cnt = DbFactory.CreateDbContext();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        userstate = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose()
+    {
+        cnt.Dispose();
+    }
+
+    private void Trimite()
+    {
+        if (userstate.User.Identity.IsAuthenticated)
+        {
+            Data.Song song = new Data.Song()
+            {
+                Titlu = songModel.Name,
+                Artist = songModel.Artist,
+                Album = songModel.Album,
+                Imagine = songModel.Image,
+                LinkSpotify = songModel.LSpotify,
+                LinkApplemusic = songModel.LApplemusic,
+                LinkYoutube = songModel.LYoutube,
+                LinkTidal = songModel.LTidal,
+                UserName = userstate.User.Identity.Name
+            };
+
+            cnt.Songs.Add(song);
+            cnt.SaveChanges();
+        }
+    }
+}

@@ -1,0 +1,351 @@
+﻿@page "/tvseries"
+
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.EntityFrameworkCore;
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@implements IDisposable
+@inject IDbContextFactory<Data.PoliHackContext> DbFactory
+
+<style>
+    .container {
+        margin: 0;
+        padding: 0;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .series {
+        margin-top: 20px;
+        background-color: wheat;
+        padding: 25px;
+        border-radius: 30px;
+    }
+
+    .series_img {
+        max-width: 200px;
+        max-height: 200px;
+        padding: 10px;
+        float: left;
+    }
+
+    .series_title {
+        font-family: 'Monaco', serif, monospace;
+        text-align: center;
+    }
+
+    .netflix_watch {
+        color: red;
+        font-family: 'Copperplate', serif, monospace;
+    }
+
+        .netflix_watch:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+    .prime_video_watch {
+        color: white;
+        font-family: 'Comic Sans MS', cursive;
+    }
+
+        .prime_video_watch:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .add_tvseries {
+        border-radius: 20px;
+        border: none;
+        background-color: white;
+    }
+</style>
+
+<button class="btn btn-circle" style="border-radius: 200px; color: none; background-color: none; border: black; float: right; position: fixed; z-index: 99;" onclick="jos()"><span style="width: 50px; height: 50px;" class="iconify" data-icon="bi:arrow-down-circle-fill" data-inline="false"></span></button>
+
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel" style="padding: 20px;">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselIndicators" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="5000">
+            <img src="images/tvseries/suits_carousel.jpeg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-interval="5000">
+            <img src="images/tvseries/riverdale_carousel.jpeg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-interval="5000">
+            <img src="images/tvseries/greysa_carousel.jpeg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-interval="5000">
+            <img src="images/tvseries/greenleaf_carousel.jpeg" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="container">
+    <div class="series media" style="background-color: pink;">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/htgawm.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">How to get away with murder</h2>
+            <p>
+                Annalise Keating, a criminal defence lawyer and professor, teaches a group of aspiring law students. However, their lives alter when they get entangled in an aberrant murder.
+            </p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt3205802/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>8.1/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/how_to_get_away_with_murder"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>88%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80024057"> <img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+            <p>&nbsp;&nbsp;<a class="prime_video_watch" href="https://www.amazon.com/gp/video/detail/B00NUKSDNI"><img src="images/tvseries/prime_video.png" style="max-width: 30px; max-height: 30px;">Watch</a></p>
+        </div>
+    </div>
+
+    <div class="series media" style="background-color: royalblue;">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/ozark.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">Ozark</h2>
+            <p>This drama series stars Jason Bateman as Marty Byrde, a financial planner who relocates his family from Chicago to a summer resort community in the Ozarks. With wife Wendy and their two kids in town, Marty is on the move after a money-laundering scheme goes wrong, forcing him to pay off a substantial debt to a Mexican drug lord in order to keep his family safe. While the Byrdes' fate hangs in the balance, the dire circumstances force the fractured family to reconnect.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt5071412/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>8.4/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/ozark"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>81%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80117552"><img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+
+        </div>
+    </div>
+
+    <div class="series media">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/dynasty.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">Dynasty</h2>
+            <p>A modernized reboot of the 1980s primetime soap follows two of America's wealthiest families, the Carringtons and the Colbys, as they feud for control over their fortune and their children.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt6128300/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>7.3/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/dynasty"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>82%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80179394"><img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+  
+        </div>
+    </div>
+
+
+    <div class="series media" style="background-color: rgb(233, 121, 80);">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/lcdp.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">Money Heist (La casa de papel) </h2>
+            <p>A criminal mastermind who goes by "The Professor" has a plan to pull off the biggest heist in recorded history -- to print billions of euros in the Royal Mint of Spain. To help him carry out the ambitious plan, he recruits eight people with certain abilities and who have nothing to lose.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt6468322/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>8.4/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/la_casa_de_papel"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>93%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80192098"><img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+            
+        </div>
+    </div>
+
+
+    <div class="series media" style="background-color: grey;">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/theQG.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">The Queen's Gambit</h2>
+            <p>Set during the Cold War era, orphaned chess prodigy Beth Harmon struggles with addiction in a quest to become the greatest chess player in the world.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt10048342/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>8.7/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/the_queens_gambit"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>100%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80234304"><img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+
+        </div>
+    </div>
+
+
+    <div class="series media" style="background-color: mediumturquoise;">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/upload.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">Upload</h2>
+            <p>A man is able to choose his own afterlife after his untimely death by having his consciousness uploaded into a virtual world. As he gets used to his new life and befriends his angel (real world handler) questions about his death arise.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt7826376/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>8.0/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/upload"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>87%</p>
+            <p>&nbsp;&nbsp;<a class="prime_video_watch" href="https://www.amazon.com/Upload-Season-1/dp/B0858YGKZ4"><img src="images/tvseries/prime_video.png" style="max-width: 30px; max-height: 30px;">Watch</a></p>
+
+        </div>
+    </div>
+
+
+    <div class="series media" style="background-color: rgb(139, 208, 104);">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/riverdale.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">Riverdale</h2>
+            <p>Archie, Betty, Jughead and Veronica tackle being teenagers in a town that is rife with sinister happenings and blood-thirsty criminals.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt5420376/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>6.9/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/riverdale"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>86%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80133311"> <img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+            <p>&nbsp;&nbsp;<a class="prime_video_watch" href="https://www.amazon.com/gp/video/detail/B01MU3G91Q"><img src="images/tvseries/prime_video.png" style="max-width: 30px; max-height: 30px;">Watch</a></p>
+
+        </div>
+    </div>
+
+    <div class="series media" style="background-color: rgb(196, 192, 65);">
+        <div class="media-object">
+            <img class="series_img" src="images/tvseries/theflash.jpeg">
+        </div>
+        <div class="desc media-body">
+            <h2 class="series_title">The Flash</h2>
+            <p>Barry Allen, a forensic scientist with the Central City police force, is struck by lightning in a freak accident. When he wakes up after nine months, he discovers that he can achieve great speeds.</p>
+        </div>
+        <div class="media-object" style="float: right;">
+            <p><a href="https://www.imdb.com/title/tt3107288/"><img src="images/tvseries/imdb.webp" style="max-width: 50px; max-height: 50px;"></a>7.7/10</p>
+            <p><a href="https://www.rottentomatoes.com/tv/flash"><img src="images/tvseries/rotten_toma.png" style="max-width: 50px; max-height: 50px;"></a>88%</p>
+            <p>&nbsp;&nbsp;&nbsp;<a class="netflix_watch" href="https://www.netflix.com/title/80027042"> <img src="images/tvseries/netflix.webp" style="max-width: 30px; max-height: 30px;"> Watch</a></p>
+            <p>&nbsp;&nbsp;<a class="prime_video_watch" href="https://www.amazon.com/Flash-Complete-First-Season/dp/B00NERU614"><img src="images/tvseries/prime_video.png" style="max-width: 30px; max-height: 30px;">Watch</a></p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<AuthorizeView>
+    <Authorized Context="authContext">
+        <div class="jumbotron" style="background-color: #9fe0af; margin-top: 50px; padding: 20px; border-radius: 20px;">
+            <div style="text-align:center;">
+                <h3>Would you like to add a new TvSeries?</h3>
+                <EditForm Context="formContext" Model="@tvModel" OnValidSubmit="@Trimite">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <label>The name of the series: <span style="padding-left:27px" /> </label><InputText @bind-Value="tvModel.Name" class="add_tvseries" type="text" id="new_TvSeries" name="new_TvSeries" /> <br />
+                            
+                    <label>Description:<span style="padding-left:90px" /></label><InputTextArea @bind-Value="tvModel.Desc" class="add_tvseries" type="text" id="TvSeries_description" name="TvSeries_description"/> <br />
+
+                    <label>Link to image of the series:</label><InputText @bind-Value="tvModel.Image" class="add_tvseries" type="text" id="link_to_image_TvSeries" name="link_to_image_TvSeries" /> <br />
+
+                    <label>Link to Netflix: <span style="padding-left:90px" /> </label><InputText @bind-Value="tvModel.LNetflix" class="add_tvseries" type="text" id="link_to_Netflix" name="link_to_Netflix" /> <br />
+
+                    <label>Link to IMDB: <span style="padding-left:93px" /> </label><InputText @bind-Value="tvModel.LImdb" class="add_tvseries" type="text" id="link_to_IMDB" name="link_to_IMDB" /> <br />
+
+                    <label>Link to Rotten Tomatoes: <span style="padding-left:15px" /> </label><InputText @bind-Value="tvModel.LRott" class="add_tvseries" type="text" id="link_to_Rotten_Tomatoes" name="link_to_Rotten_Tomatoes" placeholder="optional" /> <br />
+
+                    <label>Link to Amazon Prime: <span style="padding-left:33px" /> </label><InputText @bind-Value="tvModel.LAmazon" class="add_tvseries" type="text" id="link_to_Amazon_Prime" name="link_to_Amazon_Prime" placeholder="optional" /> <br />
+
+                    <label>Descrierea serialul trebuie sa fie cea oficiala :P</label> <br />
+
+                    <button class="add_tvseries" type="submit" onclick="tvseries_sent_alert()">Posteaza</button>
+                </EditForm>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p><em><strong>Pentru a putea trimite sugestii de titluri noi, mai intai trebuie sa va creati un cont pe site-ul nostru, sau sa va logati daca aveti deja un cont valid.</strong></em></p>
+        <p>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Login>LOGIN</a></button>
+            <button class="btn-link btn-default credentials"><a class="credtext" href=Identity/Account/Register>SIGN UP</a></button>
+        </p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{
+    private class TvModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(1000, ErrorMessage = "Text prea mare! Maxim 1000 caractere.")]
+        public string Desc { get; set; }
+
+        [Required]
+        public string Image { get; set; }
+
+        [Required]
+        public string LNetflix { get; set; }
+
+        [Required]
+        public string LImdb { get; set; }
+
+        public string LRott { get; set; }
+
+        public string LAmazon { get; set; }
+    }
+
+    private TvModel tvModel = new TvModel();
+
+    Data.PoliHackContext cnt;
+    AuthenticationState userstate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (cnt == null)
+        {
+            try
+            {
+                cnt = DbFactory.CreateDbContext();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        userstate = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose()
+    {
+        cnt.Dispose();
+    }
+
+    void Trimite()
+    {
+        if (userstate.User.Identity.IsAuthenticated)
+        {
+            Data.Tvseries serie = new Data.Tvseries()
+            {
+                Descriere = tvModel.Desc,
+                Titlu = tvModel.Name,
+                Imagine = tvModel.Image,
+                LinkNetflix = tvModel.LNetflix,
+                LinkRt = tvModel.LRott,
+                LinkAmazon = tvModel.LAmazon,
+                LinkImdb = tvModel.LImdb,
+                UserName = userstate.User.Identity.Name
+            };
+
+            cnt.Tvseries.Add(serie);
+            cnt.SaveChanges();
+        }
+    }
+}
