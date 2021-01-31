@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="S:\Microsoft Visual Studio\workspaceC#\PoliHack\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/Identity" Path="C:\Users\stan_\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.0\staticwebassets\V4\" />
+</StaticWebAssets>
